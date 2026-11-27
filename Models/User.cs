@@ -1,4 +1,3 @@
-
 using System.ComponentModel.DataAnnotations;
 using StayEase.Api.Enums;
 
@@ -28,5 +27,13 @@ namespace StayEase.Api.Models
         public bool IsActive { get; set; } = true;
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        // Hotels managed by this user
+        public ICollection<Hotel> ManagedHotels { get; set; }
+            = new List<Hotel>();
+
+        // Bookings made by this user
+        public ICollection<Booking> CustomerBookings { get; set; }
+            = new List<Booking>();
     }
 }
