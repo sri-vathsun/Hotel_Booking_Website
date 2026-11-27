@@ -1,7 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { finalize } from 'rxjs';
-import { Hotel, HotelService } from '../../../../core/services/hotel.service';
 import { RouterLink } from '@angular/router';
+import { Hotel, HotelService } from '../../../../core/services/hotel.service';
+
 @Component({
   selector: 'app-hotel-list',
   standalone: true,
@@ -14,7 +14,10 @@ export class HotelList implements OnInit {
   hotels = signal<Hotel[]>([]);
   loading = signal(true);
   errorMessage = signal('');
+
   searchText = signal('');
+  city = signal('');
+  minStarRating = signal('');
 
   constructor(private hotelService: HotelService) {}
 
@@ -22,42 +25,55 @@ export class HotelList implements OnInit {
     this.loadHotels();
   }
 
-  onSearchChange(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    this.searchText.set(input.value);
-  }
-
-  searchHotels(): void {
-    this.loadHotels(this.searchText());
-  }
-
-  clearSearch(): void {
-    this.searchText.set('');
-    this.loadHotels();
-  }
-
-  loadHotels(search?: string): void {
+  loadHotels(): void {
 
     this.loading.set(true);
     this.errorMessage.set('');
 
-    this.hotelService.getHotels(search)
-      .pipe(
-        finalize(() => this.loading.set(false))
-      )
-      .subscribe({
+    const rating = this.minStarRating()
+      ? Number(this.minStarRating())
+      : null;
 
-        next: (data) => {
-          this.hotels.set(data);
-        },
+    this.hotelService.getHotels(
+      this.searchText(),
+      this.city(),
+      rating
+    ).subscribe({
 
-        error: () => {
-          this.hotels.set([]);
-          this.errorMessage.set(
-            'Unable to load hotels. Please try again.'
-          );
-        }
+      next: (data) => {
+        this.hotels.set(data);
+        this.loading.set(false);
+      },
 
-      });
+      error: () => {
+        this.hotels.set([]);
+        this.errorMessage.set('Unable to load hotels. Please try again.');
+        this.loading.set(false);
+      }
+
+    });
+  }
+
+  onSearchChange(value: string): void {
+    this.searchText.set(value);
+  }
+
+  onCityChange(value: string): void {
+    this.city.set(value);
+  }
+
+  onRatingChange(value: string): void {
+    this.minStarRating.set(value);
+  }
+
+  applyFilters(): void {
+    this.loadHotels();
+  }
+
+  clearFilters(): void {
+    this.searchText.set('');
+    this.city.set('');
+    this.minStarRating.set('');
+    this.loadHotels();
   }
 }

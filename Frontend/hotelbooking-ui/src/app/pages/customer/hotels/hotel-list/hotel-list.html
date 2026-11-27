@@ -3,33 +3,65 @@
   <h1>Explore Hotels</h1>
   <p class="subtitle">Find a comfortable place for your next stay.</p>
 
-  <div class="search-section">
+  <!-- Search and Filters -->
+
+  <div class="filter-section">
 
     <input
       type="text"
-      placeholder="Search by hotel name, city or address"
+      placeholder="Search by hotel name..."
       [value]="searchText()"
-      (input)="onSearchChange($event)"
-      (keyup.enter)="searchHotels()"
+      (input)="onSearchChange($any($event.target).value)"
     />
 
-    <button (click)="searchHotels()">Search</button>
+    <input
+      type="text"
+      placeholder="Enter city..."
+      [value]="city()"
+      (input)="onCityChange($any($event.target).value)"
+    />
 
-    <button class="clear-button" (click)="clearSearch()">Clear</button>
+    <select
+      [value]="minStarRating()"
+      (change)="onRatingChange($any($event.target).value)"
+    >
+      <option value="">All Star Ratings</option>
+      <option value="1">1 Star & Above</option>
+      <option value="2">2 Stars & Above</option>
+      <option value="3">3 Stars & Above</option>
+      <option value="4">4 Stars & Above</option>
+      <option value="5">5 Stars</option>
+    </select>
+
+    <button class="search-button" (click)="applyFilters()">
+      Search
+    </button>
+
+    <button class="clear-button" (click)="clearFilters()">
+      Clear
+    </button>
 
   </div>
 
+  <!-- Loading -->
+
   @if (loading()) {
-    <p class="status-message">Loading hotels...</p>
+    <p class="status">Loading hotels...</p>
   }
+
+  <!-- Error -->
 
   @if (errorMessage()) {
     <p class="error">{{ errorMessage() }}</p>
   }
 
+  <!-- Empty Result -->
+
   @if (!loading() && !errorMessage() && hotels().length === 0) {
-    <p class="status-message">No hotels found. Try another search.</p>
+    <p class="status">No hotels found. Try changing your search filters.</p>
   }
+
+  <!-- Hotel List -->
 
   @if (!loading() && !errorMessage() && hotels().length > 0) {
 
@@ -55,8 +87,12 @@
             <p class="rating">
               {{ hotel.starRating }} Star Hotel
             </p>
-            <a [routerLink]="['/hotels', hotel.hotelId]" class="details-button">
-                View Details
+
+            <a
+              [routerLink]="['/hotels', hotel.hotelId]"
+              class="details-button"
+            >
+              View Details
             </a>
 
           </div>

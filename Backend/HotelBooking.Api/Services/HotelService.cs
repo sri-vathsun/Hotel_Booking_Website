@@ -12,9 +12,13 @@ public class HotelService : IHotelService
         _repository = repository;
     }
 
-    public async Task<List<HotelDto>> GetApprovedHotelsAsync()
+    public async Task<List<HotelDto>> GetApprovedHotelsAsync(
+        string? search,
+        string? city,
+        int? minStarRating)
     {
-        var hotels = await _repository.GetApprovedHotelsAsync();
+        var hotels = await _repository.GetApprovedHotelsAsync(
+            search, city, minStarRating);
 
         return hotels.Select(h => new HotelDto
         {

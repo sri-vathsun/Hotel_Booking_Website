@@ -22,16 +22,29 @@ export class HotelService {
 
   constructor(private http: HttpClient) {}
 
-  getHotels(search?: string): Observable<Hotel[]> {
+  getHotels(
+    search: string = '',
+    city: string = '',
+    minStarRating: number | null = null
+  ): Observable<Hotel[]> {
 
     let params = new HttpParams();
 
-    if (search && search.trim()) {
+    if (search.trim()) {
       params = params.set('search', search.trim());
+    }
+
+    if (city.trim()) {
+      params = params.set('city', city.trim());
+    }
+
+    if (minStarRating !== null) {
+      params = params.set('minStarRating', minStarRating);
     }
 
     return this.http.get<Hotel[]>(this.apiUrl, { params });
   }
+
   getHotelById(hotelId: number): Observable<Hotel> {
     return this.http.get<Hotel>(`${this.apiUrl}/${hotelId}`);
   }

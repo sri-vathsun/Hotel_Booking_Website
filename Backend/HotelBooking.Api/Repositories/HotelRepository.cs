@@ -13,11 +13,32 @@ public class HotelRepository : IHotelRepository
         _context = context;
     }
 
-    public async Task<List<Hotel>> GetApprovedHotelsAsync()
+    public async Task<List<Hotel>> GetApprovedHotelsAsync(
+        string? search,
+        string? city,
+        int? minStarRating)
     {
-        return await _context.Hotels
-            .Where(h => h.IsApproved && h.IsActive)
-            .ToListAsync();
+        var query = _context.Hotels
+            .Where(h => h.IsApproved && h.IsActive);
+
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            query = query.Where(h =>
+                h.Name.Contains(search) ||
+                h.Description.Contains(search));
+        }
+
+        if (!string.IsNullOrWhiteSpace(city))
+        {
+            query = query.Where(h => h.City.Contains(city));
+        }
+
+        if (minStarRating.HasValue)
+        {
+            query = query.Where(h => h.StarRating >= minStarRating.Value);
+        }
+
+        return await query.ToListAsync();
     }
 
     public async Task<Hotel?> GetHotelByIdAsync(int hotelId)

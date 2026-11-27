@@ -14,34 +14,50 @@ h1 {
   margin-bottom: 25px;
 }
 
-.search-section {
+.filter-section {
   display: flex;
-  gap: 10px;
+  flex-wrap: wrap;
+  gap: 12px;
   margin-bottom: 30px;
-  max-width: 750px;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
 }
 
-.search-section input {
+.filter-section input,
+.filter-section select {
   flex: 1;
-  padding: 12px;
+  min-width: 170px;
+  padding: 11px;
   border: 1px solid #d5dbe5;
-  border-radius: 7px;
-  font-size: 15px;
-  min-width: 0;
+  border-radius: 6px;
+  font-size: 14px;
 }
 
-.search-section button {
-  padding: 12px 20px;
+.filter-section button {
+  padding: 11px 20px;
   border: none;
-  border-radius: 7px;
-  background: #263b5a;
-  color: white;
+  border-radius: 6px;
   cursor: pointer;
+  font-weight: 600;
 }
 
-.search-section .clear-button {
-  background: #e2e6ed;
-  color: #263b5a;
+.search-button {
+  background: #315b91;
+  color: white;
+}
+
+.search-button:hover {
+  background: #243f68;
+}
+
+.clear-button {
+  background: #e8edf4;
+  color: #34445c;
+}
+
+.clear-button:hover {
+  background: #d9e0ea;
 }
 
 .hotel-grid {
@@ -72,13 +88,6 @@ h1 {
   font-weight: 600;
 }
 
-.error {
-  color: #c0392b;
-}
-
-.status-message {
-  color: #626d7d;
-}
 .details-button {
   display: inline-block;
   margin-top: 12px;
@@ -92,4 +101,12 @@ h1 {
 
 .details-button:hover {
   background: #243f68;
+}
+
+.status {
+  color: #626d7d;
+}
+
+.error {
+  color: #c0392b;
 }
