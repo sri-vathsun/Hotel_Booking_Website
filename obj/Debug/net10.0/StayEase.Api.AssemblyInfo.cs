@@ -11,10 +11,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("8aef92b6-3bec-4ac4-9572-a5ff71ca5372")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("StayEase.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7a47847e68ad579ba9ed12feb0125e1daab10cd4")]
 [assembly: System.Reflection.AssemblyProductAttribute("StayEase.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StayEase.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

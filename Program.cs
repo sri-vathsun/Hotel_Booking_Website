@@ -1,10 +1,54 @@
 using Microsoft.EntityFrameworkCore;
 using StayEase.Api.Data;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using StayEase.Api.Services.Interfaces;
+using StayEase.Api.Services.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+// Register authentication service
+builder.Services.AddScoped<IAuthService, AuthService>();
 
+// Read JWT configuration
+var jwtSettings = builder.Configuration.GetSection("Jwt");
+
+var jwtKey = jwtSettings["Key"]
+    ?? throw new InvalidOperationException("JWT Key is missing.");
+
+var key = Encoding.UTF8.GetBytes(jwtKey);
+
+// Configure JWT authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme =
+        JwtBearerDefaults.AuthenticationScheme;
+
+    options.DefaultChallengeScheme =
+        JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+
+        ValidIssuer = jwtSettings["Issuer"],
+        ValidAudience = jwtSettings["Audience"],
+
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+
+        ClockSkew = TimeSpan.Zero
+    };
+});
+
+// Enable authorization
+builder.Services.AddAuthorization();
 // Configure SQL Server database connection
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(
@@ -25,6 +69,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
