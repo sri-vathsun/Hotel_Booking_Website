@@ -70,7 +70,7 @@
               "target": "Package",
               "version": "[10.0.0, )"
             },
-            "Microsoft.Extensions.Identity.Core": {
+            "System.Security.Cryptography.Pkcs": {
               "target": "Package",
               "version": "[10.0.0, )"
             }

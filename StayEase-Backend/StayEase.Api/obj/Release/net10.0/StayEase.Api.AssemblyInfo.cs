@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("StayEase.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6357257b8010c43c3867a56c7e26663a9cca5e21")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("StayEase.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StayEase.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
