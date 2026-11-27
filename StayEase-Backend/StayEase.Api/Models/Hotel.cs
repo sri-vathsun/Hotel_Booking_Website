@@ -55,6 +55,11 @@ namespace StayEase.Api.Models
         [Required]
         public int ManagerId { get; set; }
 
+        public int? CategoryId { get; set; }
+
+        [ForeignKey(nameof(CategoryId))]
+        public Category? Category { get; set; }
+
         [ForeignKey(nameof(ManagerId))]
         public User Manager { get; set; } = null!;
 

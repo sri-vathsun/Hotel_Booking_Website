@@ -20,6 +20,7 @@ namespace StayEase.Api.Data
 		public DbSet<Booking> Bookings { get; set; }
 		public DbSet<Facility> Facilities { get; set; }
 		public DbSet<HotelFacility> HotelFacilities { get; set; }
+		public DbSet<Category> Categories { get; set; }
 
 		protected override void OnModelCreating(
 			ModelBuilder modelBuilder)
@@ -104,6 +105,16 @@ namespace StayEase.Api.Data
 			modelBuilder.Entity<Facility>()
 				.HasIndex(f => f.FacilityName)
 				.IsUnique();
+
+			modelBuilder.Entity<Category>()
+				.HasIndex(c => c.CategoryName)
+				.IsUnique();
+
+			modelBuilder.Entity<Hotel>()
+				.HasOne(h => h.Category)
+				.WithMany(c => c.Hotels)
+				.HasForeignKey(h => h.CategoryId)
+				.OnDelete(DeleteBehavior.SetNull);
 
 			// Decimal precision
 			modelBuilder.Entity<Hotel>()
