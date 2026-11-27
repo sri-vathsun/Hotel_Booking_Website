@@ -55,6 +55,9 @@
             <p class="rating">
               {{ hotel.starRating }} Star Hotel
             </p>
+            <a [routerLink]="['/hotels', hotel.hotelId]" class="details-button">
+                View Details
+            </a>
 
           </div>
 

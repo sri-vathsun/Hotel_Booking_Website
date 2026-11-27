@@ -1,11 +1,11 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { finalize } from 'rxjs';
 import { Hotel, HotelService } from '../../../../core/services/hotel.service';
-
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-hotel-list',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './hotel-list.html',
   styleUrl: './hotel-list.css'
 })

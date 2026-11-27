@@ -4,5 +4,7 @@ namespace HotelBooking.Api.Services;
 
 public interface IHotelService
 {
-    Task<List<HotelDto>> GetApprovedHotelsAsync(string? search);
+    Task<List<HotelDto>> GetApprovedHotelsAsync();
+
+    Task<HotelDto?> GetHotelByIdAsync(int hotelId);
 }

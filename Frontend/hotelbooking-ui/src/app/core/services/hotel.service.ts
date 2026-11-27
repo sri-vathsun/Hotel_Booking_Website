@@ -32,4 +32,7 @@ export class HotelService {
 
     return this.http.get<Hotel[]>(this.apiUrl, { params });
   }
+  getHotelById(hotelId: number): Observable<Hotel> {
+    return this.http.get<Hotel>(`${this.apiUrl}/${hotelId}`);
+  }
 }

@@ -4,5 +4,7 @@ namespace HotelBooking.Api.Repositories;
 
 public interface IHotelRepository
 {
-    Task<List<Hotel>> GetApprovedHotelsAsync(string? search);
+    Task<List<Hotel>> GetApprovedHotelsAsync();
+
+    Task<Hotel?> GetHotelByIdAsync(int hotelId);
 }

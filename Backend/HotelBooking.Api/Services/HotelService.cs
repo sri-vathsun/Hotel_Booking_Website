@@ -12,9 +12,9 @@ public class HotelService : IHotelService
         _repository = repository;
     }
 
-    public async Task<List<HotelDto>> GetApprovedHotelsAsync(string? search)
+    public async Task<List<HotelDto>> GetApprovedHotelsAsync()
     {
-        var hotels = await _repository.GetApprovedHotelsAsync(search);
+        var hotels = await _repository.GetApprovedHotelsAsync();
 
         return hotels.Select(h => new HotelDto
         {
@@ -27,5 +27,27 @@ public class HotelService : IHotelService
             Country = h.Country,
             StarRating = h.StarRating
         }).ToList();
+    }
+
+    public async Task<HotelDto?> GetHotelByIdAsync(int hotelId)
+    {
+        var hotel = await _repository.GetHotelByIdAsync(hotelId);
+
+        if (hotel == null)
+        {
+            return null;
+        }
+
+        return new HotelDto
+        {
+            HotelId = hotel.HotelId,
+            Name = hotel.Name,
+            Description = hotel.Description,
+            Address = hotel.Address,
+            City = hotel.City,
+            State = hotel.State,
+            Country = hotel.Country,
+            StarRating = hotel.StarRating
+        };
     }
 }
