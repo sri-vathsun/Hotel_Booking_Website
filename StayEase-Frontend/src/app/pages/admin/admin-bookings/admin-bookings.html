@@ -1,0 +1,83 @@
+<section class="admin-page">
+  <div class="page-heading">
+    <div>
+      <p class="eyebrow">RESERVATIONS</p>
+      <h1>Bookings</h1>
+      <p class="subtitle">Review reservation activity and update booking status.</p>
+    </div>
+  </div>
+
+  <form class="toolbar" (ngSubmit)="page = 1; loadBookings()">
+    <label class="search-field">
+      <span class="sr-only">Search bookings</span>
+      <input name="search" [(ngModel)]="searchText" placeholder="Search customer, hotel, or room" />
+    </label>
+    <button class="primary-button" type="submit">Search</button>
+    <label class="filter-field">
+      <span class="sr-only">Filter by booking status</span>
+      <select [ngModel]="statusFilter" name="status" (ngModelChange)="filterByStatus($event === '' ? null : $event)">
+        <option [ngValue]="null">All statuses</option>
+        @for (status of statuses; track status.value) {
+          <option [ngValue]="status.value">{{ status.label }}</option>
+        }
+      </select>
+    </label>
+  </form>
+
+  @if (errorMessage()) {
+    <p class="error-message" role="alert">{{ errorMessage() }}</p>
+  }
+
+  @if (selectedBooking(); as booking) {
+    <section class="detail-card">
+      <button class="close-button" type="button" aria-label="Close booking details" (click)="selectedBooking.set(null)">×</button>
+      <p class="eyebrow">BOOKING #{{ booking.bookingId }}</p>
+      <h2>{{ booking.hotelName }} · Room {{ booking.roomNumber }}</h2>
+      <p>Customer: {{ booking.customerName }} · {{ booking.customerEmail }}</p>
+      <p>Stay: {{ booking.checkInDate | date: 'mediumDate' }} to {{ booking.checkOutDate | date: 'mediumDate' }}</p>
+      <p>Guests: {{ booking.numberOfGuests }} · Total: {{ booking.totalAmount | currency }}</p>
+      <p>Booked: {{ booking.bookedAt | date: 'medium' }}</p>
+    </section>
+  }
+
+  @if (loading()) {
+    <p class="empty-state" aria-live="polite">Loading bookings…</p>
+  } @else if (bookings().length === 0 && !errorMessage()) {
+    <p class="empty-state">No bookings found.</p>
+  } @else if (bookings().length > 0) {
+    <div class="table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr><th>Booking</th><th>Customer</th><th>Hotel / room</th><th>Stay</th><th>Amount</th><th>Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+          @for (booking of bookings(); track booking.bookingId) {
+            <tr>
+              <td data-label="Booking">#{{ booking.bookingId }}</td>
+              <td data-label="Customer">{{ booking.customerName }}</td>
+              <td data-label="Hotel / room">{{ booking.hotelName }} · {{ booking.roomNumber }}</td>
+              <td data-label="Stay">{{ booking.checkInDate | date: 'mediumDate' }} – {{ booking.checkOutDate | date: 'mediumDate' }}</td>
+              <td data-label="Amount">{{ booking.totalAmount | currency }}</td>
+              <td data-label="Status"><span class="status-pill" [class.status-warn]="booking.status === 1" [class.status-good]="booking.status === 2 || booking.status === 5 || booking.status === 6">{{ statusName(booking.status) }}</span></td>
+              <td class="actions-cell">
+                <button class="text-button" type="button" (click)="showDetails(booking.bookingId)">Details</button>
+                <select [ngModel]="booking.status" [name]="'status-' + booking.bookingId" [attr.aria-label]="'Change status for booking ' + booking.bookingId" (ngModelChange)="updateStatus(booking, $event)">
+                  @for (status of statuses; track status.value) {
+                    <option [ngValue]="status.value">{{ status.label }}</option>
+                  }
+                </select>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <div class="pagination">
+      <span>{{ totalCount }} bookings · Page {{ page }} of {{ totalPages }}</span>
+      <div>
+        <button class="secondary-button" type="button" [disabled]="page <= 1" (click)="changePage(page - 1)">Previous</button>
+        <button class="secondary-button" type="button" [disabled]="page >= totalPages" (click)="changePage(page + 1)">Next</button>
+      </div>
+    </div>
+  }
+</section>

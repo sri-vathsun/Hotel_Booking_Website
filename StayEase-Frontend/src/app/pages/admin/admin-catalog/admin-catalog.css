@@ -1,0 +1,66 @@
+:host {
+  display: block;
+}
+
+.catalog-form {
+  background: #fff;
+  border: 1px solid #e6ebf1;
+  border-radius: 10px;
+  display: grid;
+  gap: 12px;
+  margin-bottom: 22px;
+  max-width: 600px;
+  padding: 20px;
+}
+
+.catalog-form h2 {
+  font-size: 17px;
+  margin: 0 0 4px;
+}
+
+.catalog-form label {
+  color: #52647a;
+  display: grid;
+  font-size: 13px;
+  font-weight: 600;
+  gap: 6px;
+}
+
+.catalog-form input,
+.catalog-form textarea {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.form-actions,
+.pagination > div {
+  display: flex;
+  gap: 8px;
+}
+
+.actions-cell {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.text-button {
+  background: none;
+  border: 0;
+  color: #28547e;
+  cursor: pointer;
+  font: inherit;
+  padding: 6px;
+}
+
+.danger-text {
+  color: #b42318;
+}
+
+.pagination {
+  align-items: center;
+  color: #758296;
+  display: flex;
+  font-size: 13px;
+  justify-content: space-between;
+  margin-top: 16px;
+}
