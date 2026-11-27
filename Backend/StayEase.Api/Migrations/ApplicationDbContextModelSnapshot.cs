@@ -69,6 +69,31 @@ namespace StayEase.Api.Migrations
                     b.ToTable("Bookings");
                 });
 
+            modelBuilder.Entity("StayEase.Api.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.HasKey("CategoryId");
+
+                    b.HasIndex("CategoryName")
+                        .IsUnique();
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("StayEase.Api.Models.Facility", b =>
                 {
                     b.Property<int>("FacilityId")
@@ -106,6 +131,9 @@ namespace StayEase.Api.Migrations
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
+
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("City")
                         .IsRequired()
@@ -155,6 +183,8 @@ namespace StayEase.Api.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("HotelId");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("ManagerId");
 
@@ -313,11 +343,18 @@ namespace StayEase.Api.Migrations
 
             modelBuilder.Entity("StayEase.Api.Models.Hotel", b =>
                 {
+                    b.HasOne("StayEase.Api.Models.Category", "Category")
+                        .WithMany("Hotels")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("StayEase.Api.Models.User", "Manager")
                         .WithMany("ManagedHotels")
                         .HasForeignKey("ManagerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Category");
 
                     b.Navigation("Manager");
                 });
@@ -358,6 +395,11 @@ namespace StayEase.Api.Migrations
                     b.Navigation("Hotel");
 
                     b.Navigation("RoomType");
+                });
+
+            modelBuilder.Entity("StayEase.Api.Models.Category", b =>
+                {
+                    b.Navigation("Hotels");
                 });
 
             modelBuilder.Entity("StayEase.Api.Models.Facility", b =>

@@ -20,6 +20,10 @@ builder.Services.AddScoped<
     CustomerBookingRepository>();
 
 builder.Services.AddScoped<
+    ICustomerProfileService,
+    CustomerProfileService>();
+
+builder.Services.AddScoped<
     ICustomerBookingService,
     CustomerBookingService>();
 // Customer Room services
