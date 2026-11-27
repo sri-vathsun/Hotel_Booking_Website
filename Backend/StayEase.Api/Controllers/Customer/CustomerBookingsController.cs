@@ -46,8 +46,7 @@ public class CustomerBookingsController : ControllerBase
         int customerId = CurrentCustomerId();
 
         var result = await _service.GetBookingConfirmationAsync(
-            id,
-            customerId);
+            id, customerId);
 
         if (result == null)
         {
@@ -58,6 +57,40 @@ public class CustomerBookingsController : ControllerBase
         }
 
         return Ok(result);
+    }
+
+    // Commit 7: View customer's bookings
+    [HttpGet("my-bookings")]
+    public async Task<IActionResult> GetMyBookings()
+    {
+        int customerId = CurrentCustomerId();
+
+        var result = await _service.GetMyBookingsAsync(customerId);
+
+        return Ok(result);
+    }
+
+    // Commit 8: Cancel customer's booking
+    [HttpPatch("{id:int}/cancel")]
+    public async Task<IActionResult> CancelBooking(int id)
+    {
+        int customerId = CurrentCustomerId();
+
+        bool cancelled = await _service.CancelBookingAsync(
+            id, customerId);
+
+        if (!cancelled)
+        {
+            return BadRequest(new
+            {
+                message = "Booking cannot be cancelled. Check the booking status and check-in date."
+            });
+        }
+
+        return Ok(new
+        {
+            message = "Booking cancelled successfully."
+        });
     }
 
     private int CurrentCustomerId()

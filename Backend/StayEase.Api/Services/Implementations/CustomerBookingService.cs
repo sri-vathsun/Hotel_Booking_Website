@@ -42,9 +42,7 @@ public class CustomerBookingService : ICustomerBookingService
         }
 
         bool hasConflict = await _repository.HasBookingConflictAsync(
-            dto.RoomId,
-            checkIn,
-            checkOut);
+            dto.RoomId, checkIn, checkOut);
 
         if (hasConflict)
         {
@@ -52,7 +50,6 @@ public class CustomerBookingService : ICustomerBookingService
         }
 
         int nights = (checkOut - checkIn).Days;
-
         decimal totalAmount = room.PricePerNight * nights;
 
         var booking = new Booking
@@ -70,7 +67,7 @@ public class CustomerBookingService : ICustomerBookingService
 
         await _repository.CreateBookingAsync(booking);
 
-        return MapToDto(booking, room);
+        return MapToConfirmationDto(booking, room);
     }
 
     public async Task<BookingConfirmationDto?> GetBookingConfirmationAsync(
@@ -78,8 +75,7 @@ public class CustomerBookingService : ICustomerBookingService
         int customerId)
     {
         var booking = await _repository.GetBookingAsync(
-            bookingId,
-            customerId);
+            bookingId, customerId);
 
         if (booking == null)
         {
@@ -104,7 +100,58 @@ public class CustomerBookingService : ICustomerBookingService
         };
     }
 
-    private static BookingConfirmationDto MapToDto(
+    public async Task<List<MyBookingDto>> GetMyBookingsAsync(
+        int customerId)
+    {
+        var bookings = await _repository.GetCustomerBookingsAsync(
+            customerId);
+
+        return bookings.Select(b => new MyBookingDto
+        {
+            BookingId = b.BookingId,
+            HotelName = b.Hotel.HotelName,
+            RoomNumber = b.Room.RoomNumber,
+            RoomType = b.Room.RoomType.TypeName,
+            CheckInDate = b.CheckInDate,
+            CheckOutDate = b.CheckOutDate,
+            NumberOfGuests = b.NumberOfGuests,
+            TotalAmount = b.TotalAmount,
+            Status = b.Status,
+            BookedAt = b.BookedAt
+        }).ToList();
+    }
+
+    public async Task<bool> CancelBookingAsync(
+        int bookingId,
+        int customerId)
+    {
+        var booking = await _repository.GetCustomerBookingForCancellationAsync(
+            bookingId, customerId);
+
+        if (booking == null)
+        {
+            return false;
+        }
+
+        if (booking.Status != BookingStatus.Pending &&
+            booking.Status != BookingStatus.Confirmed)
+        {
+            return false;
+        }
+
+        if (booking.CheckInDate.Date <= DateTime.Today)
+        {
+            return false;
+        }
+
+        booking.Status = BookingStatus.Cancelled;
+
+        await _repository.UpdateBookingAsync(booking);
+
+        return true;
+    }
+
+    private static BookingConfirmationDto MapToConfirmationDto(
         Booking booking,
         Room room)
     {

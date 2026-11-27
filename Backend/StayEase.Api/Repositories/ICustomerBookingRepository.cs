@@ -17,4 +17,12 @@ public interface ICustomerBookingRepository
     Task<Booking?> GetBookingAsync(
         int bookingId,
         int customerId);
+
+    Task<List<Booking>> GetCustomerBookingsAsync(int customerId);
+
+    Task<Booking?> GetCustomerBookingForCancellationAsync(
+        int bookingId,
+        int customerId);
+
+    Task UpdateBookingAsync(Booking booking);
 }

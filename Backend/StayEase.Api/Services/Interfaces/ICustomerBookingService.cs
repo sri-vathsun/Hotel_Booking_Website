@@ -12,4 +12,8 @@ public interface ICustomerBookingService
     Task<BookingConfirmationDto?> GetBookingConfirmationAsync(
         int bookingId,
         int customerId);
+
+    Task<List<MyBookingDto>> GetMyBookingsAsync(int customerId);
+
+    Task<bool> CancelBookingAsync(int bookingId, int customerId);
 }
