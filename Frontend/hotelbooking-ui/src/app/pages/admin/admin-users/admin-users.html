@@ -1,0 +1,68 @@
+<section class="admin-page">
+  <div class="page-heading">
+    <div>
+      <p class="eyebrow">ACCOUNTS</p>
+      <h1>{{ title }}</h1>
+      <p class="subtitle">Search accounts and manage access.</p>
+    </div>
+  </div>
+
+  <form class="toolbar" (ngSubmit)="page = 1; loadUsers()">
+    <label class="search-field">
+      <span class="sr-only">Search users</span>
+      <input name="search" [(ngModel)]="searchText" placeholder="Search name or email" />
+    </label>
+    <button class="primary-button" type="submit">Search</button>
+  </form>
+
+  @if (errorMessage()) {
+    <p class="error-message" role="alert">{{ errorMessage() }}</p>
+  }
+  @if (loading()) {
+    <p class="empty-state" aria-live="polite">Loading {{ title.toLowerCase() }}…</p>
+  } @else if (users().length === 0 && !errorMessage()) {
+    <p class="empty-state">No users found.</p>
+  } @else if (users().length > 0) {
+    <div class="table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Joined</th>
+            <th>Status</th>
+            <th><span class="sr-only">Actions</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (user of users(); track user.userId) {
+            <tr>
+              <td data-label="Name">{{ user.fullName }}</td>
+              <td data-label="Email">{{ user.email }}</td>
+              <td data-label="Phone">{{ user.phoneNumber || '—' }}</td>
+              <td data-label="Joined">{{ user.createdAt | date: 'mediumDate' }}</td>
+              <td data-label="Status">
+                <span class="status-pill" [class.status-good]="user.isActive" [class.status-muted]="!user.isActive">
+                  {{ user.isActive ? 'Active' : 'Inactive' }}
+                </span>
+              </td>
+              <td class="action-cell">
+                <button class="secondary-button" type="button" (click)="setUserActive(user)">
+                  {{ user.isActive ? 'Deactivate' : 'Activate' }}
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <div class="pagination">
+      <span>{{ totalCount }} accounts · Page {{ page }} of {{ totalPages }}</span>
+      <div>
+        <button class="secondary-button" type="button" [disabled]="page <= 1" (click)="changePage(page - 1)">Previous</button>
+        <button class="secondary-button" type="button" [disabled]="page >= totalPages" (click)="changePage(page + 1)">Next</button>
+      </div>
+    </div>
+  }
+</section>

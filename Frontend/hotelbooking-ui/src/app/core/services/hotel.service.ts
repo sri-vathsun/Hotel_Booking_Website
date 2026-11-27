@@ -18,7 +18,7 @@ export interface Hotel {
 })
 export class HotelService {
 
-  private apiUrl = 'http://localhost:5269/api/hotels';
+  private apiUrl = 'http://localhost:5167/api/hotels';
 
   constructor(private http: HttpClient) {}
 
