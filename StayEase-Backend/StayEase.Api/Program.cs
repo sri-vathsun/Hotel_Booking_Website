@@ -12,6 +12,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Register authentication service
 builder.Services.AddScoped<IAuthService, AuthService>();
 
+builder.Services.AddScoped<
+    IAdminDashboardService,
+    AdminDashboardService>();
+
 // Read JWT configuration
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 
