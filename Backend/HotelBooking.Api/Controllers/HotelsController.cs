@@ -16,9 +16,11 @@ public class HotelsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<HotelDto>>> GetHotels()
+    public async Task<ActionResult<List<HotelDto>>> GetHotels(
+        [FromQuery] string? search)
     {
-        var hotels = await _service.GetApprovedHotelsAsync();
+        var hotels = await _service.GetApprovedHotelsAsync(search);
+
         return Ok(hotels);
     }
 }

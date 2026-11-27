@@ -3,8 +3,24 @@
   <h1>Explore Hotels</h1>
   <p class="subtitle">Find a comfortable place for your next stay.</p>
 
+  <div class="search-section">
+
+    <input
+      type="text"
+      placeholder="Search by hotel name, city or address"
+      [value]="searchText()"
+      (input)="onSearchChange($event)"
+      (keyup.enter)="searchHotels()"
+    />
+
+    <button (click)="searchHotels()">Search</button>
+
+    <button class="clear-button" (click)="clearSearch()">Clear</button>
+
+  </div>
+
   @if (loading()) {
-    <p>Loading hotels...</p>
+    <p class="status-message">Loading hotels...</p>
   }
 
   @if (errorMessage()) {
@@ -12,38 +28,42 @@
   }
 
   @if (!loading() && !errorMessage() && hotels().length === 0) {
-    <p>No hotels are available currently.</p>
+    <p class="status-message">No hotels found. Try another search.</p>
   }
 
-  <div class="hotel-grid">
+  @if (!loading() && !errorMessage() && hotels().length > 0) {
 
-    @for (hotel of hotels(); track hotel.hotelId) {
+    <div class="hotel-grid">
 
-      <div class="hotel-card">
+      @for (hotel of hotels(); track hotel.hotelId) {
 
-        <div class="hotel-content">
+        <div class="hotel-card">
 
-          <h2>{{ hotel.name }}</h2>
+          <div class="hotel-content">
 
-          <p>{{ hotel.description }}</p>
+            <h2>{{ hotel.name }}</h2>
 
-          <p>
-            {{ hotel.address }},
-            {{ hotel.city }},
-            {{ hotel.state }},
-            {{ hotel.country }}
-          </p>
+            <p>{{ hotel.description }}</p>
 
-          <p class="rating">
-            {{ hotel.starRating }} Star Hotel
-          </p>
+            <p>
+              {{ hotel.address }},
+              {{ hotel.city }},
+              {{ hotel.state }},
+              {{ hotel.country }}
+            </p>
+
+            <p class="rating">
+              {{ hotel.starRating }} Star Hotel
+            </p>
+
+          </div>
 
         </div>
 
-      </div>
+      }
 
-    }
+    </div>
 
-  </div>
+  }
 
 </div>

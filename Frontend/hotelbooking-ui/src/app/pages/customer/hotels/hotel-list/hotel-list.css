@@ -11,7 +11,37 @@ h1 {
 
 .subtitle {
   color: #70798a;
+  margin-bottom: 25px;
+}
+
+.search-section {
+  display: flex;
+  gap: 10px;
   margin-bottom: 30px;
+  max-width: 750px;
+}
+
+.search-section input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #d5dbe5;
+  border-radius: 7px;
+  font-size: 15px;
+  min-width: 0;
+}
+
+.search-section button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 7px;
+  background: #263b5a;
+  color: white;
+  cursor: pointer;
+}
+
+.search-section .clear-button {
+  background: #e2e6ed;
+  color: #263b5a;
 }
 
 .hotel-grid {
@@ -44,4 +74,8 @@ h1 {
 
 .error {
   color: #c0392b;
+}
+
+.status-message {
+  color: #626d7d;
 }
