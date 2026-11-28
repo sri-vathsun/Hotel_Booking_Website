@@ -43,6 +43,22 @@ public class CustomerHotelRepository : ICustomerHotelRepository
 
         return await query
             .OrderBy(h => h.HotelName)
+            .Select(h => new Hotel
+            {
+                HotelId = h.HotelId,
+                HotelName = h.HotelName,
+                Description = h.Description,
+                Address = h.Address,
+                City = h.City,
+                State = h.State,
+                Country = h.Country,
+                PostalCode = h.PostalCode,
+                ContactNumber = h.ContactNumber,
+                Email = h.Email,
+                Rating = h.Rating,
+                ManagerId = h.ManagerId,
+                Status = h.Status
+            })
             .ToListAsync();
     }
 
@@ -50,8 +66,25 @@ public class CustomerHotelRepository : ICustomerHotelRepository
     {
         return await _context.Hotels
             .AsNoTracking()
-            .FirstOrDefaultAsync(h =>
+            .Where(h =>
                 h.HotelId == hotelId &&
-                h.Status == HotelStatus.Approved);
+                h.Status == HotelStatus.Approved)
+            .Select(h => new Hotel
+            {
+                HotelId = h.HotelId,
+                HotelName = h.HotelName,
+                Description = h.Description,
+                Address = h.Address,
+                City = h.City,
+                State = h.State,
+                Country = h.Country,
+                PostalCode = h.PostalCode,
+                ContactNumber = h.ContactNumber,
+                Email = h.Email,
+                Rating = h.Rating,
+                ManagerId = h.ManagerId,
+                Status = h.Status
+            })
+            .FirstOrDefaultAsync();
     }
 }
