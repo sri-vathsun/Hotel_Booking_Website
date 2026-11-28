@@ -1,0 +1,97 @@
+
+<section class="bookings-page">
+
+  <div class="page-heading">
+    <h1>My Bookings</h1>
+    <p>View and manage your hotel reservations.</p>
+  </div>
+
+  @if (loading()) {
+    <p class="message">Loading your bookings...</p>
+  }
+
+  @if (errorMessage()) {
+    <p class="error">{{ errorMessage() }}</p>
+  }
+
+  @if (successMessage()) {
+    <p class="success">{{ successMessage() }}</p>
+  }
+
+  @if (!loading() && bookings().length === 0 && !errorMessage()) {
+    <div class="empty-state">
+      <h2>No bookings yet</h2>
+      <p>You haven't made any hotel reservations.</p>
+
+      <a routerLink="/customer/hotels">
+        Explore Hotels
+      </a>
+    </div>
+  }
+
+  <div class="booking-list">
+
+    @for (booking of bookings(); track booking.bookingId) {
+
+      <article class="booking-card">
+
+        <div class="booking-header">
+          <div>
+            <h2>{{ booking.hotelName }}</h2>
+            <p>Booking #{{ booking.bookingId }}</p>
+          </div>
+
+          <span class="status">
+            {{ getStatus(booking.status) }}
+          </span>
+        </div>
+
+        <div class="booking-details">
+
+          <div>
+            <span>Room</span>
+            <strong>{{ booking.roomNumber }} - {{ booking.roomType }}</strong>
+          </div>
+
+          <div>
+            <span>Check-in</span>
+            <strong>{{ booking.checkInDate | date:'mediumDate' }}</strong>
+          </div>
+
+          <div>
+            <span>Check-out</span>
+            <strong>{{ booking.checkOutDate | date:'mediumDate' }}</strong>
+          </div>
+
+          <div>
+            <span>Guests</span>
+            <strong>{{ booking.numberOfGuests }}</strong>
+          </div>
+
+          <div>
+            <span>Total Amount</span>
+            <strong>{{ booking.totalAmount | currency:'INR' }}</strong>
+          </div>
+
+          <div>
+            <span>Booked On</span>
+            <strong>{{ booking.bookedAt | date:'mediumDate' }}</strong>
+          </div>
+
+        </div>
+
+        @if (canCancel(booking)) {
+          <button
+            class="cancel-button"
+            (click)="cancelBooking(booking.bookingId)">
+            Cancel Booking
+          </button>
+        }
+
+      </article>
+
+    }
+
+  </div>
+
+</section>

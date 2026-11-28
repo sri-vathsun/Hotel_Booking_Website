@@ -2,7 +2,8 @@
 import { Routes } from '@angular/router';
 
 import { HotelList } from './pages/customer/hotels/hotel-list/hotel-list';
-
+import { MyBookings } from './pages/customer/bookings/my-bookings/my-bookings';
+import { CustomerProfile } from './pages/customer/profile/customer-profile/customer-profile';
 import { adminGuard } from './core/guards/admin.guard';
 import { AdminLayout } from './pages/admin/admin-layout/admin-layout';
 import { AdminDashboard } from './pages/admin/admin-dashboard/admin-dashboard';
@@ -59,6 +60,8 @@ export const routes: Routes = [
         path: 'hotels/:hotelId/rooms/:roomId/book',
         component: BookingForm
       },
+      { path: 'bookings', component: MyBookings },
+      { path: 'profile', component: CustomerProfile },
       {
         path: 'bookings/:id/confirmation',
         component: BookingConfirmationPage
