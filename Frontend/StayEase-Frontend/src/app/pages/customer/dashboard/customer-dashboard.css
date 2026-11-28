@@ -1,0 +1,73 @@
+
+.dashboard {
+  padding: 35px 5%;
+}
+
+.welcome-section {
+  padding: 45px;
+  border-radius: 15px;
+  background: #eaf1f8;
+  color: #243b53;
+}
+
+.eyebrow {
+  color: #52789c;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.welcome-section h1 {
+  max-width: 650px;
+  font-size: 34px;
+  margin: 12px 0;
+}
+
+.welcome-section p {
+  color: #65778b;
+  line-height: 1.7;
+}
+
+.welcome-section a {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 12px 18px;
+  border-radius: 7px;
+  background: #234f7b;
+  color: white;
+  text-decoration: none;
+}
+
+.dashboard h2 {
+  margin: 35px 0 18px;
+  color: #243b53;
+}
+
+.quick-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.quick-card {
+  padding: 25px;
+  border-radius: 11px;
+  background: white;
+  color: #34465c;
+  text-decoration: none;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+.card-number {
+  color: #6485a5;
+  font-weight: 700;
+}
+
+.quick-card h3 {
+  margin-bottom: 8px;
+}
+
+.quick-card p {
+  color: #718096;
+  line-height: 1.6;
+}

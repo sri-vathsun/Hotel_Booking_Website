@@ -1,0 +1,96 @@
+:host {
+  display: block;
+}
+
+.toolbar {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-field {
+  flex: 1;
+  max-width: 420px;
+}
+
+.search-field input {
+  width: 100%;
+}
+
+.filter-field select {
+  min-width: 150px;
+}
+
+.actions-cell {
+  min-width: 190px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.actions-cell select {
+  max-width: 125px;
+}
+
+.text-button,
+.close-button {
+  background: none;
+  border: 0;
+  color: #28547e;
+  cursor: pointer;
+  font: inherit;
+  margin-right: 8px;
+  padding: 6px;
+}
+
+.detail-card {
+  background: #fff;
+  border: 1px solid #dfe7ef;
+  border-radius: 10px;
+  margin-bottom: 18px;
+  padding: 20px;
+  position: relative;
+}
+
+.detail-card h2 {
+  margin: 0 0 8px;
+}
+
+.detail-card p {
+  color: #65758a;
+  line-height: 1.5;
+}
+
+.close-button {
+  color: #69798b;
+  font-size: 22px;
+  margin: 0;
+  position: absolute;
+  right: 12px;
+  top: 8px;
+}
+
+.room-list {
+  display: grid;
+  gap: 7px;
+}
+
+.room-list span {
+  color: #65758a;
+  font-size: 13px;
+}
+
+.pagination {
+  align-items: center;
+  color: #758296;
+  display: flex;
+  font-size: 13px;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.pagination > div {
+  display: flex;
+  gap: 8px;
+}

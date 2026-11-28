@@ -1,0 +1,91 @@
+<section class="admin-page">
+  <div class="page-heading">
+    <div>
+      <p class="eyebrow">PROPERTY MANAGEMENT</p>
+      <h1>Hotels</h1>
+      <p class="subtitle">Review hotel submissions and manage approval status.</p>
+    </div>
+  </div>
+
+  <form class="toolbar" (ngSubmit)="page = 1; loadHotels()">
+    <label class="search-field">
+      <span class="sr-only">Search hotels</span>
+      <input name="search" [(ngModel)]="searchText" placeholder="Search hotel or location" />
+    </label>
+    <button class="primary-button" type="submit">Search</button>
+    <label class="filter-field">
+      <span class="sr-only">Filter by hotel status</span>
+      <select [ngModel]="statusFilter" name="status" (ngModelChange)="filterByStatus($event === '' ? null : $event)">
+        <option [ngValue]="null">All statuses</option>
+        @for (status of statuses; track status.value) {
+          <option [ngValue]="status.value">{{ status.label }}</option>
+        }
+      </select>
+    </label>
+  </form>
+
+  @if (errorMessage()) {
+    <p class="error-message" role="alert">{{ errorMessage() }}</p>
+  }
+
+  @if (selectedHotel(); as hotel) {
+    <section class="detail-card">
+      <button class="close-button" type="button" aria-label="Close hotel details" (click)="selectedHotel.set(null)">×</button>
+      <p class="eyebrow">HOTEL DETAILS</p>
+      <h2>{{ hotel.hotelName }}</h2>
+      <p>{{ hotel.address }}, {{ hotel.city }}, {{ hotel.state }}, {{ hotel.country }} {{ hotel.postalCode }}</p>
+      <p>{{ hotel.description || 'No description provided.' }}</p>
+      <p>Manager: {{ hotel.managerName }} · {{ hotel.contactNumber }} · {{ hotel.email || 'No email' }}</p>
+      <p>Facilities: {{ hotel.facilities.length ? hotel.facilities.join(', ') : 'None listed' }}</p>
+      @if (hotel.rooms.length) {
+        <h3>Rooms ({{ hotel.rooms.length }})</h3>
+        <div class="room-list">
+          @for (room of hotel.rooms; track room.roomId) {
+            <span>Room {{ room.roomNumber }} · {{ room.roomType }} · {{ room.pricePerNight | currency }}</span>
+          }
+        </div>
+      }
+    </section>
+  }
+
+  @if (loading()) {
+    <p class="empty-state" aria-live="polite">Loading hotels…</p>
+  } @else if (hotels().length === 0 && !errorMessage()) {
+    <p class="empty-state">No hotels found.</p>
+  } @else if (hotels().length > 0) {
+    <div class="table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr><th>Hotel</th><th>Location</th><th>Manager</th><th>Rooms</th><th>Rating</th><th>Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+          @for (hotel of hotels(); track hotel.hotelId) {
+            <tr>
+              <td data-label="Hotel">{{ hotel.hotelName }}</td>
+              <td data-label="Location">{{ hotel.city }}, {{ hotel.country }}</td>
+              <td data-label="Manager">{{ hotel.managerName }}</td>
+              <td data-label="Rooms">{{ hotel.roomCount }}</td>
+              <td data-label="Rating">{{ hotel.rating | number: '1.1-2' }}</td>
+              <td data-label="Status"><span class="status-pill" [class.status-good]="hotel.status === 2" [class.status-warn]="hotel.status === 1">{{ statusName(hotel.status) }}</span></td>
+              <td class="actions-cell">
+                <button class="text-button" type="button" (click)="showDetails(hotel.hotelId)">Details</button>
+                <select [ngModel]="hotel.status" [name]="'status-' + hotel.hotelId" [attr.aria-label]="'Change status for ' + hotel.hotelName" (ngModelChange)="updateStatus(hotel, $event)">
+                  @for (status of statuses; track status.value) {
+                    <option [ngValue]="status.value">{{ status.label }}</option>
+                  }
+                </select>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <div class="pagination">
+      <span>{{ totalCount }} hotels · Page {{ page }} of {{ totalPages }}</span>
+      <div>
+        <button class="secondary-button" type="button" [disabled]="page <= 1" (click)="changePage(page - 1)">Previous</button>
+        <button class="secondary-button" type="button" [disabled]="page >= totalPages" (click)="changePage(page + 1)">Next</button>
+      </div>
+    </div>
+  }
+</section>

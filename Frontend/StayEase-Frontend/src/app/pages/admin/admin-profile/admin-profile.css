@@ -1,0 +1,36 @@
+:host {
+  display: block;
+}
+
+.profile-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.profile-card {
+  background: #fff;
+  border: 1px solid #e6ebf1;
+  border-radius: 10px;
+  display: grid;
+  gap: 14px;
+  padding: 22px;
+}
+
+.profile-card h2 {
+  font-size: 17px;
+  margin: 0 0 4px;
+}
+
+.profile-card label {
+  color: #52647a;
+  display: grid;
+  font-size: 13px;
+  font-weight: 600;
+  gap: 6px;
+}
+
+.profile-card button {
+  justify-self: start;
+  margin-top: 4px;
+}
