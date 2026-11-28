@@ -1,0 +1,94 @@
+
+<section class="booking-page">
+
+  <a class="back-link"
+     [routerLink]="['/customer/hotels', hotelId, 'rooms']"
+     [queryParams]="{
+       checkIn: checkIn,
+       checkOut: checkOut,
+       guests: guests
+     }">
+    ← Back to available rooms
+  </a>
+
+  <div class="page-heading">
+    <p class="eyebrow">COMPLETE YOUR RESERVATION</p>
+    <h1>Review Your Booking</h1>
+  </div>
+
+  @if (loading()) {
+    <p class="message">Verifying selected room...</p>
+  }
+
+  @if (errorMessage()) {
+    <p class="error">{{ errorMessage() }}</p>
+  }
+
+  @if (room(); as selectedRoom) {
+
+    <div class="booking-card">
+
+      <div class="room-information">
+        <h2>{{ selectedRoom.roomType }}</h2>
+
+        <p>Room Number: {{ selectedRoom.roomNumber }}</p>
+
+        <p>{{ selectedRoom.description }}</p>
+
+        <p>Maximum capacity: {{ selectedRoom.capacity }} guests</p>
+      </div>
+
+      <div class="booking-information">
+
+        <h3>Stay Details</h3>
+
+        <div class="detail-row">
+          <span>Check-in</span>
+          <strong>{{ checkIn }}</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Check-out</span>
+          <strong>{{ checkOut }}</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Guests</span>
+          <strong>{{ guests }}</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Number of nights</span>
+          <strong>{{ numberOfNights }}</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Price per night</span>
+          <strong>₹{{ selectedRoom.pricePerNight | number:'1.2-2' }}</strong>
+        </div>
+
+        <div class="total-row">
+          <span>Estimated Total</span>
+          <strong>₹{{ estimatedTotal | number:'1.2-2' }}</strong>
+        </div>
+
+        <p class="note">
+          The final amount is calculated and validated by the backend.
+        </p>
+
+        <button
+          type="button"
+          (click)="confirmBooking()"
+          [disabled]="submitting()">
+
+          {{ submitting() ? 'Creating Booking...' : 'Confirm Booking' }}
+
+        </button>
+
+      </div>
+
+    </div>
+
+  }
+
+</section>

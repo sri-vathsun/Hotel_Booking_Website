@@ -1,0 +1,113 @@
+
+<section class="availability-page">
+
+  <a class="back-link"
+     [routerLink]="['/customer/hotels', hotelId]">
+    ← Back to hotel
+  </a>
+
+  <div class="page-heading">
+    <p class="eyebrow">PLAN YOUR STAY</p>
+    <h1>Check Room Availability</h1>
+    <p>Select your dates and number of guests to find available rooms.</p>
+  </div>
+
+  <form class="availability-form" (ngSubmit)="searchRooms()">
+
+    <div class="form-group">
+      <label>Check-in Date</label>
+      <input
+        type="date"
+        name="checkIn"
+        [(ngModel)]="checkIn"
+        [min]="today"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Check-out Date</label>
+      <input
+        type="date"
+        name="checkOut"
+        [(ngModel)]="checkOut"
+        [min]="checkIn || today"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Guests</label>
+      <input
+        type="number"
+        name="guests"
+        [(ngModel)]="guests"
+        min="1"
+        max="20"
+        required
+      />
+    </div>
+
+    <button type="submit" [disabled]="loading()">
+      {{ loading() ? 'Checking...' : 'Search Rooms' }}
+    </button>
+
+  </form>
+
+  @if (errorMessage()) {
+    <p class="error">{{ errorMessage() }}</p>
+  }
+
+  @if (loading()) {
+    <p class="message">Checking available rooms...</p>
+  }
+
+  @if (searched() && !loading() && !errorMessage()) {
+
+    <h2>Available Rooms</h2>
+
+    @if (rooms().length === 0) {
+      <p class="message">
+        No rooms are available for the selected dates and guests.
+      </p>
+    }
+
+    <div class="room-grid">
+
+      @for (room of rooms(); track room.roomId) {
+
+        <article class="room-card">
+
+          <div class="room-banner">
+            <span>Available</span>
+          </div>
+
+          <div class="room-content">
+
+            <h3>{{ room.roomType }}</h3>
+
+            <p>Room Number: {{ room.roomNumber }}</p>
+
+            <p>Maximum Guests: {{ room.capacity }}</p>
+
+            <p>{{ room.description }}</p>
+
+            <h3 class="price">
+              ₹{{ room.pricePerNight | number:'1.2-2' }}
+              <small>/ night</small>
+            </h3>
+
+            <button type="button" (click)="selectRoom(room)">
+              Select Room
+            </button>
+
+          </div>
+
+        </article>
+
+      }
+
+    </div>
+  }
+
+</section>

@@ -1,0 +1,43 @@
+<main class="login-page">
+  <section class="login-card" aria-labelledby="login-title">
+    <a class="brand" routerLink="/">StayEase</a>
+    <p class="eyebrow">ADMINISTRATION</p>
+    <h1 id="login-title">Sign in to your dashboard</h1>
+    <p class="intro">Use an administrator account to continue.</p>
+
+    <form #loginForm="ngForm" (ngSubmit)="submit()">
+      <label for="email">Email address</label>
+      <input
+        id="email"
+        name="email"
+        type="email"
+        [(ngModel)]="email"
+        required
+        email
+        autocomplete="username"
+        placeholder="admin@example.com"
+      />
+
+      <label for="password">Password</label>
+      <input
+        id="password"
+        name="password"
+        type="password"
+        [(ngModel)]="password"
+        required
+        autocomplete="current-password"
+        placeholder="Enter your password"
+      />
+
+      @if (errorMessage()) {
+        <p class="error" role="alert">{{ errorMessage() }}</p>
+      }
+
+      <button type="submit" [disabled]="loginForm.invalid || loading()">
+        {{ loading() ? 'Signing in…' : 'Sign in' }}
+      </button>
+    </form>
+
+    <a class="back-link" routerLink="/">Back to StayEase</a>
+  </section>
+</main>

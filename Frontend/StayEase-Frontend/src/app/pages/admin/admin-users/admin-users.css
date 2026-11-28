@@ -1,0 +1,48 @@
+:host {
+  display: block;
+}
+
+.toolbar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-field {
+  flex: 1;
+  max-width: 430px;
+}
+
+.search-field input {
+  width: 100%;
+}
+
+.action-cell {
+  text-align: right;
+}
+
+.pagination {
+  align-items: center;
+  color: #758296;
+  display: flex;
+  font-size: 13px;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.pagination > div {
+  display: flex;
+  gap: 8px;
+}
+
+@media (max-width: 640px) {
+  .toolbar,
+  .pagination {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .search-field {
+    max-width: none;
+  }
+}

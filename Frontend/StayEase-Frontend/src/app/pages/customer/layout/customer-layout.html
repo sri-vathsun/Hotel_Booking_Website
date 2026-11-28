@@ -1,0 +1,45 @@
+
+<div class="customer-shell">
+
+  <header class="customer-header">
+
+    <a routerLink="/customer/dashboard" class="brand">
+      StayEase
+    </a>
+
+    <nav>
+      <a routerLink="/customer/dashboard"
+         routerLinkActive="active">
+        Home
+      </a>
+
+      <a routerLink="/customer/hotels"
+         routerLinkActive="active">
+        Explore Hotels
+      </a>
+
+      <a routerLink="/customer/bookings"
+         routerLinkActive="active">
+        My Bookings
+      </a>
+
+      <a routerLink="/customer/profile"
+         routerLinkActive="active">
+        My Profile
+      </a>
+      <button class="logout-button" (click)="logout()">
+        Logout
+      </button>
+    </nav>
+
+  </header>
+
+  <main class="customer-content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="customer-footer">
+    StayEase - Find your comfortable stay
+  </footer>
+
+</div>

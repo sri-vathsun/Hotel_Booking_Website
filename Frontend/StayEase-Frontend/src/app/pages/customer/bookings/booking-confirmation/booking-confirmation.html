@@ -1,0 +1,86 @@
+
+<section class="confirmation-page">
+
+  @if (loading()) {
+    <p class="message">Loading booking confirmation...</p>
+  }
+
+  @if (errorMessage()) {
+    <p class="error">{{ errorMessage() }}</p>
+  }
+
+  @if (booking(); as item) {
+
+    <div class="confirmation-card">
+
+      <div class="success-icon">✓</div>
+
+      <p class="eyebrow">BOOKING DETAILS</p>
+
+      <h1>Booking Submitted</h1>
+
+      <p class="subtitle">
+        Your booking has been successfully submitted.
+      </p>
+
+      <div class="booking-id">
+        Booking ID: #{{ item.bookingId }}
+      </div>
+
+      <div class="status-row">
+        <span>Booking Status</span>
+        <strong>{{ getStatus(item.status) }}</strong>
+      </div>
+
+      <div class="details">
+
+        <h2>{{ item.hotelName }}</h2>
+
+        <p>{{ item.roomType }} - Room {{ item.roomNumber }}</p>
+
+        <div class="detail-row">
+          <span>Check-in</span>
+          <strong>{{ item.checkInDate | date:'mediumDate' }}</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Check-out</span>
+          <strong>{{ item.checkOutDate | date:'mediumDate' }}</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Guests</span>
+          <strong>{{ item.numberOfGuests }}</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Number of nights</span>
+          <strong>{{ item.numberOfNights }}</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Price per night</span>
+          <strong>₹{{ item.pricePerNight | number:'1.2-2' }}</strong>
+        </div>
+
+        <div class="total-row">
+          <span>Total Amount</span>
+          <strong>₹{{ item.totalAmount | number:'1.2-2' }}</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Booked At</span>
+          <strong>{{ item.bookedAt | date:'medium' }}</strong>
+        </div>
+
+      </div>
+
+      <a routerLink="/customer/dashboard">
+        Back to Dashboard
+      </a>
+
+    </div>
+
+  }
+
+</section>

@@ -1,0 +1,59 @@
+<section class="admin-page">
+  <div class="page-heading">
+    <div>
+      <p class="eyebrow">ACCOUNT SETTINGS</p>
+      <h1>Admin profile</h1>
+      <p class="subtitle">Update your account information and password.</p>
+    </div>
+  </div>
+
+  @if (errorMessage()) {
+    <p class="error-message" role="alert">{{ errorMessage() }}</p>
+  }
+  @if (successMessage()) {
+    <p class="success-message" role="status">{{ successMessage() }}</p>
+  }
+  @if (loading()) {
+    <p class="empty-state" aria-live="polite">Loading profile…</p>
+  } @else if (profile()) {
+    <div class="profile-grid">
+      <form class="profile-card" (ngSubmit)="saveProfile()">
+        <h2>Profile information</h2>
+        <label>
+          Full name
+          <input name="fullName" [(ngModel)]="fullName" required maxlength="100" />
+        </label>
+        <label>
+          Email
+          <input name="email" type="email" [(ngModel)]="email" required />
+        </label>
+        <label>
+          Phone number
+          <input name="phoneNumber" type="tel" [(ngModel)]="phoneNumber" maxlength="15" />
+        </label>
+        <button class="primary-button" type="submit" [disabled]="savingProfile() || !fullName.trim() || !email.trim()">
+          {{ savingProfile() ? 'Saving…' : 'Save profile' }}
+        </button>
+      </form>
+
+      <form class="profile-card" (ngSubmit)="changePassword()">
+        <h2>Change password</h2>
+        <label>
+          Current password
+          <input name="currentPassword" type="password" [(ngModel)]="currentPassword" required autocomplete="current-password" />
+        </label>
+        <label>
+          New password
+          <input name="newPassword" type="password" [(ngModel)]="newPassword" required minlength="8" autocomplete="new-password" />
+        </label>
+        <label>
+          Confirm new password
+          <input name="confirmPassword" type="password" [(ngModel)]="confirmPassword" required minlength="8" autocomplete="new-password" />
+        </label>
+        <button class="primary-button" type="submit" [disabled]="savingPassword() || !currentPassword || newPassword.length < 8 || !confirmPassword">
+          {{ savingPassword() ? 'Updating…' : 'Change password' }}
+        </button>
+      </form>
+    </div>
+  }
+</section>
