@@ -1,0 +1,99 @@
+:host {
+  display: block;
+}
+
+.page-heading {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  color: #8793a3;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.13em;
+  margin: 0 0 8px;
+}
+
+h1 {
+  color: #24354a;
+  font-size: 28px;
+  margin: 0;
+}
+
+.subtitle {
+  color: #758296;
+  font-size: 14px;
+  margin: 8px 0 0;
+}
+
+.primary-button,
+.secondary-button {
+  border: 1px solid #234f7b;
+  border-radius: 7px;
+  cursor: pointer;
+  font: inherit;
+  padding: 10px 14px;
+}
+
+.primary-button {
+  background: #234f7b;
+  color: #fff;
+}
+
+.primary-button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.secondary-button {
+  background: #fff;
+  color: #234f7b;
+}
+
+.stats-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.stat-card {
+  background: #fff;
+  border: 1px solid #e6ebf1;
+  border-radius: 11px;
+  box-shadow: 0 4px 14px #253c560a;
+  display: grid;
+  gap: 18px;
+  min-height: 108px;
+  padding: 20px;
+}
+
+.stat-label {
+  color: #718096;
+  font-size: 13px;
+}
+
+.stat-card strong {
+  color: #244b73;
+  font-size: 30px;
+  line-height: 1;
+}
+
+.stat-card.attention strong {
+  color: #b7791f;
+}
+
+.notice {
+  background: #fff;
+  border: 1px solid #e6ebf1;
+  border-radius: 10px;
+  color: #66758a;
+  padding: 20px;
+}
+
+.notice.error {
+  border-color: #f2c5c1;
+  color: #a3312a;
+}

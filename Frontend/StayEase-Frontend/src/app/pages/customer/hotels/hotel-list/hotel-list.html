@@ -1,0 +1,49 @@
+<div class="hotel-page">
+
+  <h1>Explore Hotels</h1>
+  <p class="subtitle">Find a comfortable place for your next stay.</p>
+
+  @if (loading()) {
+    <p>Loading hotels...</p>
+  }
+
+  @if (errorMessage()) {
+    <p class="error">{{ errorMessage() }}</p>
+  }
+
+  @if (!loading() && !errorMessage() && hotels().length === 0) {
+    <p>No hotels are available currently.</p>
+  }
+
+  <div class="hotel-grid">
+
+    @for (hotel of hotels(); track hotel.hotelId) {
+
+      <div class="hotel-card">
+
+        <div class="hotel-content">
+
+          <h2>{{ hotel.name }}</h2>
+
+          <p>{{ hotel.description }}</p>
+
+          <p>
+            {{ hotel.address }},
+            {{ hotel.city }},
+            {{ hotel.state }},
+            {{ hotel.country }}
+          </p>
+
+          <p class="rating">
+            {{ hotel.starRating }} Star Hotel
+          </p>
+
+        </div>
+
+      </div>
+
+    }
+
+  </div>
+
+</div>

@@ -1,0 +1,72 @@
+<section class="admin-page">
+  <div class="page-heading">
+    <div>
+      <p class="eyebrow">PERFORMANCE</p>
+      <h1>Reports</h1>
+      <p class="subtitle">Completed booking activity and revenue from the admin API.</p>
+    </div>
+    <form class="year-filter" (ngSubmit)="loadReports()">
+      <label for="report-year">Year</label>
+      <input id="report-year" name="year" type="number" min="2000" max="2100" [(ngModel)]="year" />
+      <button class="primary-button" type="submit" [disabled]="loading()">View</button>
+    </form>
+  </div>
+
+  @if (errorMessage()) {
+    <p class="error-message" role="alert">{{ errorMessage() }}</p>
+  }
+  @if (loading()) {
+    <p class="empty-state" aria-live="polite">Loading reports…</p>
+  } @else if (!errorMessage()) {
+    <div class="report-summary">
+      <article class="stat-card">
+        <span class="stat-label">Checked-out bookings · {{ year }}</span>
+        <strong>{{ totalBookings }}</strong>
+      </article>
+      <article class="stat-card">
+        <span class="stat-label">Reported revenue · {{ year }}</span>
+        <strong>{{ totalRevenue | currency }}</strong>
+      </article>
+    </div>
+
+    <div class="report-grid">
+      <section class="report-card">
+        <h2>Monthly revenue</h2>
+        <p class="card-caption">Completed bookings by booking month</p>
+        @if (monthly().length === 0) {
+          <p class="empty-state">No completed bookings recorded for {{ year }}.</p>
+        } @else {
+          <div class="bar-list">
+            @for (point of monthly(); track point.label) {
+              <div class="bar-row">
+                <span>{{ monthName(point.label) }}</span>
+                <div class="bar-track"><span [style.width.%]="revenueWidth(point.revenue)"></span></div>
+                <strong>{{ point.revenue | currency }}</strong>
+                <small>{{ point.bookings }} bookings</small>
+              </div>
+            }
+          </div>
+        }
+      </section>
+
+      <section class="report-card">
+        <h2>Popular hotels</h2>
+        <p class="card-caption">Ranked by completed bookings</p>
+        @if (popularHotels().length === 0) {
+          <p class="empty-state">No completed hotel stays recorded yet.</p>
+        } @else {
+          <ol class="popular-list">
+            @for (hotel of popularHotels(); track hotel.label; let index = $index) {
+              <li>
+                <span class="rank">{{ index + 1 }}</span>
+                <span class="hotel-name">{{ hotel.label }}</span>
+                <span>{{ hotel.bookings }} stays</span>
+                <strong>{{ hotel.revenue | currency }}</strong>
+              </li>
+            }
+          </ol>
+        }
+      </section>
+    </div>
+  }
+</section>

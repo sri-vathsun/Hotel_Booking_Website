@@ -1,0 +1,102 @@
+
+<main class="auth-page">
+
+  <section class="auth-card">
+
+    <a class="brand" routerLink="/">StayEase</a>
+
+    <p class="eyebrow">JOIN STAYEASE</p>
+
+    <h1>Create your account</h1>
+
+    <p class="intro">
+      Register to explore hotels and manage your bookings.
+    </p>
+
+    <form #registerForm="ngForm" (ngSubmit)="submit()">
+
+      <label for="fullName">Full Name</label>
+
+      <input
+        id="fullName"
+        name="fullName"
+        type="text"
+        [(ngModel)]="fullName"
+        required
+        maxlength="100"
+        placeholder="Enter your full name">
+
+      <label for="email">Email Address</label>
+
+      <input
+        id="email"
+        name="email"
+        type="email"
+        [(ngModel)]="email"
+        required
+        email
+        placeholder="Enter your email">
+
+      <label for="phoneNumber">Phone Number</label>
+
+      <input
+        id="phoneNumber"
+        name="phoneNumber"
+        type="tel"
+        [(ngModel)]="phoneNumber"
+        required
+        maxlength="15"
+        placeholder="Enter your phone number">
+
+      <label for="password">Password</label>
+
+      <input
+        id="password"
+        name="password"
+        type="password"
+        [(ngModel)]="password"
+        required
+        minlength="6"
+        placeholder="Create a password">
+
+      <label for="confirmPassword">Confirm Password</label>
+
+      <input
+        id="confirmPassword"
+        name="confirmPassword"
+        type="password"
+        [(ngModel)]="confirmPassword"
+        required
+        placeholder="Re-enter your password">
+
+      @if (errorMessage()) {
+        <p class="error" role="alert">{{ errorMessage() }}</p>
+      }
+
+      @if (successMessage()) {
+        <p class="success" role="status">{{ successMessage() }}</p>
+      }
+
+      <button
+        class="submit-button"
+        type="submit"
+        [disabled]="registerForm.invalid || loading()">
+
+        {{ loading() ? 'Creating Account...' : 'Create Account' }}
+
+      </button>
+
+    </form>
+
+    <p class="register-link">
+      Already have an account?
+      <a routerLink="/login">Sign In</a>
+    </p>
+
+    <a class="back-link" routerLink="/">
+      Back to StayEase
+    </a>
+
+  </section>
+
+</main>

@@ -1,0 +1,96 @@
+
+<section class="hotel-page">
+
+  <div class="page-heading">
+    <p class="eyebrow">FIND YOUR NEXT STAY</p>
+    <h1>Explore Hotels</h1>
+    <p class="subtitle">
+      Discover comfortable places for your next trip.
+    </p>
+  </div>
+
+  <form class="search-panel" (ngSubmit)="loadHotels()">
+
+    <input
+      type="text"
+      name="searchText"
+      [(ngModel)]="searchText"
+      placeholder="Search hotel name"
+    />
+
+    <input
+      type="text"
+      name="city"
+      [(ngModel)]="city"
+      placeholder="Enter city"
+    />
+
+    <select name="rating" [(ngModel)]="minStarRating">
+      <option [ngValue]="null">Any star rating</option>
+      <option [ngValue]="3">3 stars and above</option>
+      <option [ngValue]="4">4 stars and above</option>
+      <option [ngValue]="5">5 stars</option>
+    </select>
+
+    <button type="submit" [disabled]="loading()">
+      Search
+    </button>
+
+    <button
+      type="button"
+      class="clear-button"
+      (click)="clearSearch()">
+      Clear
+    </button>
+
+  </form>
+
+  @if (loading()) {
+    <p class="message">Loading hotels...</p>
+  }
+
+  @if (errorMessage()) {
+    <p class="error">{{ errorMessage() }}</p>
+  }
+
+  @if (!loading() && !errorMessage() && hotels().length === 0) {
+    <p class="message">No hotels found. Try changing your search.</p>
+  }
+
+  <div class="hotel-grid">
+
+    @for (hotel of hotels(); track hotel.hotelId) {
+
+      <article class="hotel-card">
+
+        <div class="hotel-banner">
+          <span>{{ hotel.starRating }} ★</span>
+        </div>
+
+        <div class="hotel-content">
+
+          <h2>{{ hotel.name }}</h2>
+
+          <p>{{ hotel.description }}</p>
+
+          <p class="location">
+            {{ hotel.city }}, {{ hotel.state }}, {{ hotel.country }}
+          </p>
+
+          <p class="rating">
+            {{ hotel.starRating }} Star Hotel
+          </p>
+
+          <a [routerLink]="['/customer/hotels', hotel.hotelId]">
+            View Details
+          </a>
+
+        </div>
+
+      </article>
+
+    }
+
+  </div>
+
+</section>

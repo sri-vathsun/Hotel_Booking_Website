@@ -1,0 +1,55 @@
+
+<section class="details-page">
+
+  <a class="back-link" routerLink="/customer/hotels">
+    ← Back to hotels
+  </a>
+
+  @if (loading()) {
+    <p>Loading hotel details...</p>
+  }
+
+  @if (errorMessage()) {
+    <p class="error">{{ errorMessage() }}</p>
+  }
+
+  @if (hotel(); as item) {
+
+    <article class="details-card">
+
+      <div class="details-banner">
+        <span>{{ item.starRating }} ★ Hotel</span>
+      </div>
+
+      <div class="details-content">
+
+        <h1>{{ item.name }}</h1>
+
+        <p class="description">
+          {{ item.description }}
+        </p>
+
+        <h3>Location</h3>
+
+        <p>
+          {{ item.address }},
+          {{ item.city }},
+          {{ item.state }},
+          {{ item.country }}
+        </p>
+
+        <p class="rating">
+          {{ item.starRating }} Star Rating
+        </p>
+
+        <a [routerLink]="['/customer/hotels', item.hotelId, 'rooms']">
+          Check Room Availability
+        </a>
+
+      </div>
+
+    </article>
+
+  }
+
+</section>

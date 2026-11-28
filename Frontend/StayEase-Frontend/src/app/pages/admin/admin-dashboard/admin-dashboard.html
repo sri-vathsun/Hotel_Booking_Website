@@ -1,0 +1,52 @@
+<section class="admin-page">
+  <div class="page-heading">
+    <div>
+      <p class="eyebrow">OVERVIEW</p>
+      <h1>Dashboard</h1>
+      <p class="subtitle">A live snapshot of activity across StayEase.</p>
+    </div>
+    <button class="primary-button" type="button" (click)="loadDashboard()" [disabled]="loading()">
+      {{ loading() ? 'Loading…' : 'Refresh' }}
+    </button>
+  </div>
+
+  @if (loading()) {
+    <p class="notice" aria-live="polite">Loading dashboard statistics…</p>
+  } @else if (errorMessage()) {
+    <div class="notice error" role="alert">
+      <p>{{ errorMessage() }}</p>
+      <button class="secondary-button" type="button" (click)="loadDashboard()">Try again</button>
+    </div>
+  } @else if (stats(); as summary) {
+    <div class="stats-grid">
+      <article class="stat-card">
+        <span class="stat-label">Customers</span>
+        <strong>{{ summary.totalCustomers }}</strong>
+      </article>
+      <article class="stat-card">
+        <span class="stat-label">Hotel managers</span>
+        <strong>{{ summary.totalHotelManagers }}</strong>
+      </article>
+      <article class="stat-card">
+        <span class="stat-label">Hotels</span>
+        <strong>{{ summary.totalHotels }}</strong>
+      </article>
+      <article class="stat-card attention">
+        <span class="stat-label">Pending hotel approvals</span>
+        <strong>{{ summary.pendingApprovals }}</strong>
+      </article>
+      <article class="stat-card">
+        <span class="stat-label">Rooms</span>
+        <strong>{{ summary.totalRooms }}</strong>
+      </article>
+      <article class="stat-card">
+        <span class="stat-label">Bookings</span>
+        <strong>{{ summary.totalBookings }}</strong>
+      </article>
+      <article class="stat-card attention">
+        <span class="stat-label">Pending bookings</span>
+        <strong>{{ summary.pendingBookings }}</strong>
+      </article>
+    </div>
+  }
+</section>

@@ -1,0 +1,148 @@
+
+.availability-page {
+  min-height: 100vh;
+  padding: 35px 5%;
+  background: #f7f8fc;
+}
+
+.back-link {
+  color: #234f7b;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.page-heading {
+  margin: 25px 0;
+}
+
+.page-heading h1 {
+  color: #243b53;
+}
+
+.page-heading p {
+  color: #718096;
+}
+
+.eyebrow {
+  color: #6485a5 !important;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.availability-form {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr) auto;
+  align-items: end;
+  gap: 15px;
+  padding: 22px;
+  background: white;
+  border-radius: 12px;
+}
+
+.form-group {
+  display: grid;
+  gap: 9px;
+}
+
+.form-group label {
+  color: #34465c;
+  font-weight: 600;
+}
+
+.form-group input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px;
+  border: 1px solid #d6dde7;
+  border-radius: 7px;
+}
+
+.availability-form button,
+.room-content button {
+  padding: 12px 17px;
+  border: 0;
+  border-radius: 7px;
+  background: #234f7b;
+  color: white;
+  cursor: pointer;
+}
+
+.availability-page h2 {
+  margin: 30px 0 18px;
+  color: #243b53;
+}
+
+.room-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.room-card {
+  overflow: hidden;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px #00000009;
+}
+
+.room-banner {
+  height: 90px;
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px;
+  background: linear-gradient(130deg, #dce8f2, #a9c1d6);
+}
+
+.room-banner span {
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: white;
+  color: #23764d;
+  font-weight: 700;
+}
+
+.room-content {
+  padding: 20px;
+}
+
+.room-content h3 {
+  color: #243b53;
+}
+
+.room-content p {
+  color: #687789;
+  line-height: 1.5;
+}
+
+.room-content .price {
+  color: #234f7b;
+}
+
+.price small {
+  font-size: 12px;
+  color: #718096;
+  font-weight: 400;
+}
+
+.message {
+  color: #718096;
+  margin-top: 20px;
+}
+
+.error {
+  color: #b42318;
+  margin-top: 15px;
+}
+
+@media (max-width: 850px) {
+  .availability-form {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .availability-form {
+    grid-template-columns: 1fr;
+  }
+}

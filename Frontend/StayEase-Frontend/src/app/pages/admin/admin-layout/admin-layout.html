@@ -1,0 +1,35 @@
+<div class="admin-shell">
+  <aside class="sidebar">
+    <a class="brand" routerLink="/">StayEase<span>ADMIN</span></a>
+    <p class="nav-label">WORKSPACE</p>
+    <nav aria-label="Admin navigation">
+      <a routerLink="/admin/dashboard" routerLinkActive="active">Dashboard</a>
+      <a routerLink="/admin/hotels" routerLinkActive="active">Hotels</a>
+      <a routerLink="/admin/users/customers" routerLinkActive="active">Customers</a>
+      <a routerLink="/admin/users/managers" routerLinkActive="active">Hotel managers</a>
+      <a routerLink="/admin/bookings" routerLinkActive="active">Bookings</a>
+      <a routerLink="/admin/catalog/facilities" routerLinkActive="active">Facilities</a>
+      <a routerLink="/admin/catalog/categories" routerLinkActive="active">Categories</a>
+      <a routerLink="/admin/reports" routerLinkActive="active">Reports</a>
+      <a routerLink="/admin/profile" routerLinkActive="active">Profile</a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="profile-summary">
+        <span class="avatar" aria-hidden="true">{{ adminName.charAt(0).toUpperCase() }}</span>
+        <span><strong>{{ adminName }}</strong><small>Administrator</small></span>
+      </div>
+      <button type="button" class="logout" (click)="logout()">Sign out</button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <span>StayEase / Administration</span>
+      <span class="role-badge">ADMIN</span>
+    </header>
+    <div class="page-content">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>
