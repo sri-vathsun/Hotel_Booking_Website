@@ -1,0 +1,89 @@
+
+<main class="auth-page">
+
+  <section class="auth-card">
+
+    <a class="brand" routerLink="/">StayEase</a>
+
+    <p class="eyebrow">WELCOME TO STAYEASE</p>
+
+    <h1>Sign in to continue</h1>
+
+    <p class="intro">
+      Access your account and manage your stay.
+    </p>
+
+    <div class="login-switch">
+
+      <button
+        type="button"
+        [class.selected]="loginType === 'Customer'"
+        (click)="switchLogin('Customer')">
+        Customer Login
+      </button>
+
+      <button
+        type="button"
+        [class.selected]="loginType === 'Admin'"
+        (click)="switchLogin('Admin')">
+        Admin Login
+      </button>
+
+    </div>
+
+    <form #loginForm="ngForm" (ngSubmit)="submit()">
+
+      <label for="email">Email Address</label>
+
+      <input
+        id="email"
+        name="email"
+        type="email"
+        [(ngModel)]="email"
+        required
+        email
+        autocomplete="username"
+        placeholder="Enter your email">
+
+      <label for="password">Password</label>
+
+      <input
+        id="password"
+        name="password"
+        type="password"
+        [(ngModel)]="password"
+        required
+        autocomplete="current-password"
+        placeholder="Enter your password">
+
+      @if (errorMessage()) {
+        <p class="error" role="alert">
+          {{ errorMessage() }}
+        </p>
+      }
+
+      <button
+        class="submit-button"
+        type="submit"
+        [disabled]="loginForm.invalid || loading()">
+
+        {{ loading() ? 'Signing in...' : 'Login as ' + loginType }}
+
+      </button>
+
+    </form>
+
+    @if (loginType === 'Customer') {
+      <p class="register-link">
+        Don't have an account?
+        <a routerLink="/register">Create Account</a>
+      </p>
+    }
+
+    <a class="back-link" routerLink="/">
+      Back to StayEase
+    </a>
+
+  </section>
+
+</main>

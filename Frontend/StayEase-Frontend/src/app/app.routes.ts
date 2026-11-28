@@ -23,8 +23,20 @@ import { RoomAvailability } from './pages/customer/hotels/room-availability/room
 import { BookingForm } from './pages/customer/bookings/booking-form/booking-form';
 import { BookingConfirmationPage } from './pages/customer/bookings/booking-confirmation/booking-confirmation';
 
-export const routes: Routes = [
+import { Login } from './pages/auth/login/login';
+import { Register } from './pages/auth/register/register';
+import { customerGuard } from './core/guards/customer.guard';
 
+export const routes: Routes = [
+  // Authentication routes
+  {
+    path: 'login',
+    component: Login
+  },
+  {
+    path: 'register',
+    component: Register
+  },
   // Admin routes
   {
     path: 'admin/login',
@@ -50,6 +62,7 @@ export const routes: Routes = [
   {
     path: 'customer',
     component: CustomerLayout,
+    canActivate: [customerGuard],
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
       { path: 'dashboard', component: CustomerDashboard },
